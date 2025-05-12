@@ -11,9 +11,42 @@ public class App
         System.out.println("****WELCOME TO ZOMAC POINT OF SALE****\n****CHOOSE OPTION****\n\n1=> Login\n2=>Register");
         try{
            option = scan.nextInt(); 
+           scan.nextLine();
            if(option==1)
            {
-            //ask for the role , user name and password
+            System.out.println("Enter Your Role admin or cashier"); 
+            String role;
+            role = scan.nextLine();
+            if(role.equals("admin"))
+            {
+              boolean isLogin = admin.login();
+              if(isLogin)
+              {
+                //when admin logs in  
+                //call the admin menu 
+                admin.displayAdminMenu();
+
+              }else{
+                System.out.println("Invalid Credentials");
+                mainMenu();
+              }
+            }
+            else if(role.equals("cashier"))
+            {
+              boolean isLogin = cashier.login();
+               if(isLogin)
+              {
+
+              }else{
+                System.out.println("Invalid Credentials");
+                mainMenu();
+              }
+            }
+            else{
+              System.out.println("option Invalide");
+              mainMenu();
+            }
+
            }
            else if(option==2)
            {

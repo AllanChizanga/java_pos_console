@@ -46,8 +46,40 @@ public class  User
         return this.password;
     }
     //login 
-    public void login()
-    {
+    public boolean login()
+    { 
+        //collect user email and passworc
+        //fetch first record with such details 
+        //if found then authenticate user 
+        System.out.println("******LOGIN PAGE******\n\n");
+        try{
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Email :\n");
+        this.email = scan.nextLine();
+        System.out.println("Password :\n");
+        this.password = scan.nextLine(); 
+        //connection object 
+        MyConnection conn = new MyConnection(); 
+        //query
+        String query = "SELECT * FROM users WHERE email = ? AND password = ?";
+        //prepare  
+        PreparedStatement st = conn.connection.prepareStatement(query);
+        //parameters 
+        st.setString(1,this.email);
+        st.setString(2,this.password);
+        //execute 
+        ResultSet rs = st.executeQuery();
+        return rs.next(); //returns true if a matching row is found 
+        }
+        catch(Exception e)
+        {
+            System.out.println("Login Failed :"+e.getMessage()); 
+            this.login();
+            
+        }
+       return true;
+
+
 
     }
     //register
@@ -141,4 +173,8 @@ public class  User
 
 
     }//end of register()
+    public void logout()
+    {
+        
+    }
 }
